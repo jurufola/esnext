@@ -12,7 +12,7 @@ function getWeather(cityId) {
     let city = cityId;
     let temperature = 20;
     return {
-        city: city,
+        city: city.toUpperCase(),
         temperature : temperature
     }
 }
