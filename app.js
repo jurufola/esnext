@@ -41,3 +41,13 @@ console.log(defaultTrip.toString());
 
 const freeTrip = new classes.FreeTrip("nantes", "Nantes", "img/nantes.jpg");
 console.log(freeTrip.toString())
+
+tripService = new classes.TripService();
+console.log(tripService);
+let tripRecherche = null; 
+let tripName ="Toulouse";
+tripService.findByName(tripName).then(trip => {
+                tripRecherche = trip;
+                console.log("Trip found " + tripRecherche);
+                })
+        .catch(err => console.log(`No trip with name ${tripName}`));
