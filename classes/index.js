@@ -64,6 +64,7 @@ class TripService {
 
                 } else {
                    // console.log('je suis dans le if trip null ' + trip);
+                   err =  `No trip with name ${tripName}`;
                     reject(err); // en cas d'erreur `No trip with name xxx ${tripName}`
                     }
             }, 2000)
@@ -107,16 +108,28 @@ class PriceService {
         //let trip1 = new Trip('paris', 'Paris', 'img/paris.jpg');
         //let trip2 = new Trip('rio-de-janeiro', 'Rio de Janeiro', 'img/rio-de-janeiro.jpg');
         let ThePrices = new Map();
-        prices.set('paris', 100);
-        prices.set('rio-de-janeiro', 150);
+        ThePrices.set('paris', 100);
+        ThePrices.set('rio-de-janeiro', 150);
         this.prices = ThePrices;
 
     }
     findPriceByTripId(tripId) {
         return new Promise((resolve, reject) => {
-            setTimeout( () => {
+            setTimeout( (prix, err) => {
                 // ici l'exécution du code est asynchrone
-                // TODO utiliser resolve et reject en fonction du résultat dela recherche
+                // TODO utiliser resolve et reject en fonction du résultat de la recherche
+               
+                if(this.prices.has(tripId)) {
+                    
+                    prix=this.prices.get(tripId)
+                    resolve(prix); // en cas de succès
+
+                } else {
+                   
+                    err = `No price for trip id ${tripId}`;
+                    //console.log(err);
+                    reject(err); 
+                    }
             }, 2000)
         });
     }

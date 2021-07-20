@@ -30,7 +30,7 @@ console.log(nycId);
 console.log(othersCities.length);
 const classes = require('./classes');
 
-parisTrip = new classes.Trip("paris", "Paris", "img/paris.jpg");
+let parisTrip = new classes.Trip("paris", "Paris", "img/paris.jpg");
 console.log(parisTrip.toString());
 console.log(parisTrip.name);
 parisTrip.price = 100;
@@ -40,14 +40,33 @@ const defaultTrip = classes.Trip.getDefaultTrip();
 console.log(defaultTrip.toString());
 
 const freeTrip = new classes.FreeTrip("nantes", "Nantes", "img/nantes.jpg");
-console.log(freeTrip.toString())
+console.log(freeTrip.toString());
 
-tripService = new classes.TripService();
+let tripService = new classes.TripService();
 console.log(tripService);
 let tripRecherche = null; 
-let tripName ="Toulouse";
+let tripName ="Paris";
 tripService.findByName(tripName).then(trip => {
                 tripRecherche = trip;
                 console.log("Trip found " + tripRecherche);
                 })
-        .catch(err => console.log(`No trip with name ${tripName}`));
+        .catch(err => console.log(err));
+let priceService = new classes.PriceService();
+console.log(priceService);
+
+tripName ="Nantes";
+            /* Avec Deux blocs d'erreur*/
+/*tripService.findByName(tripName).then(trip => {
+                return priceService.findPriceByTripId(trip.id)
+            }, err => console.log(err)).then(price => {
+                console.log(`Price Found ${price}`);
+            }, err => console.log(err));*/
+
+            /*Avec une seul bloc d'erreur */
+tripService.findByName(tripName).then(trip => {
+                return priceService.findPriceByTripId(trip.id)
+            }).then(price => {
+                console.log(`Price Found ${price}`);
+            })
+            .catch(err => console.log(err));
+
